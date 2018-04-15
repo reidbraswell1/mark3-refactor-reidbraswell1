@@ -7,35 +7,32 @@ namespace RefactorKata
     {
         static void Main(string[] args)
         {
-            //This is intentionally bad : (  Let's Refactor!
-            System.Data.SqlClient.SqlConnection Conn = new System.Data.SqlClient.SqlConnection("Server=.;Database=myDataBase;User Id=myUsername;Password = myPassword;");
+            const string SQL_COMMAND_TEXT = "select * from Products";
+            const string SERVER_INFO = "Server=.;Database=myDataBase;User Id=myUsername;Password = myPassword;";
 
-            System.Data.SqlClient.SqlCommand cmd = Conn.CreateCommand();
-            cmd.CommandText = "select * from Products";
-            /*
-             * cmd.CommandText = "Select * from Invoices";
-             */
-            System.Data.SqlClient.SqlDataReader reader = cmd.ExecuteReader();
             List<Product> products = new List<Product>();
 
-            //TODO: Replace with Dapper
-            while (reader.Read())
+            using (var conn = new System.Data.SqlClient.SqlConnection(SERVER_INFO))
             {
-                var prod = new Product();
-                prod.name = reader["Name"].ToString();
-                products.Add(prod);
-            }
-            Conn.Dispose();
+                var cmd = conn.CreateCommand();
+                cmd.CommandText = SQL_COMMAND_TEXT;   
+                var reader = cmd.ExecuteReader();
+                while(reader.Read())
+                {
+                    var prod = new Product();
+                    prod.Name = reader["Name"].ToString();
+                    products.Add(prod);
+                }//while//
+            }//using//
             Console.WriteLine("Products Loaded!");
             for (int i =0; i< products.Count; i++)
             {
-                Console.WriteLine(products[i].name);
-            }
-        }
-    }
+                Console.WriteLine(products[i].Name);
+            }//for//
+        }//Main//
+    }//Program//
     public class Product
     {
-        public string name;
-        public string Name { get { return name; } set { name = value; } }
-    }
-}
+        public string Name { get;   set; } 
+    }//Product//
+}//RefactorKata//

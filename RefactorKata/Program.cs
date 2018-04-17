@@ -16,9 +16,9 @@ namespace RefactorKata
             using (var conn = new SqlConnection(ConnectionString))
             {
                 var cmd = conn.CreateCommand();
-                cmd.CommandText = SqlCommandText;   
+                cmd.CommandText = SqlCommandText;
                 var reader = cmd.ExecuteReader();
-                while(reader.Read())
+                while (reader.Read())
                 {
                     var prod = new Product();
                     prod.Name = reader["Name"].ToString();
@@ -26,14 +26,8 @@ namespace RefactorKata
                 }//while//
             }//using//
             Console.WriteLine("Products Loaded!");
-            for (int i =0; i< products.Count; i++)
-            {
-                Console.WriteLine(products[i].Name);
-            }//for//
+            foreach (var product in products)
+                Console.WriteLine(product.Name);
         }//Main//
     }//Program//
-    public class Product
-    {
-        public string Name { get;   set; } 
-    }//Product//
 }//RefactorKata//

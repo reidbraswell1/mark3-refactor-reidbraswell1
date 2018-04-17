@@ -11,7 +11,7 @@ namespace RefactorKata
             const string SqlCommandText = "select * from Products";
             const string ConnectionString = "Server=.;Database=myDataBase;User Id=myUsername;Password = myPassword;";
 
-            List<Product> products = new List<Product>();
+            var products = new List<Product>();
 
             using (var conn = new SqlConnection(ConnectionString))
             {
@@ -20,18 +20,15 @@ namespace RefactorKata
                 var reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
-                    var prod = new Product()
-                    {
-                        Name = reader["Name"].ToString()
-                    };
+                    var prod = new Product() { Name = reader["Name"].ToString() };
                     products.Add(prod);
-                }//while//
-            }//using//
+                }
+            }
             Console.WriteLine("Products Loaded!");
             foreach (var product in products)
             {
                 Console.WriteLine(product.Name);
-            }//foreach//
-        }//Main//
-    }//Program//
-}//RefactorKata//
+            }
+        }
+    }
+}

@@ -20,14 +20,18 @@ namespace RefactorKata
                 var reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
-                    var prod = new Product() { Name = reader["Name"].ToString()
-                };
-                products.Add(prod);
-            }//while//
-        }//using//
-        Console.WriteLine("Products Loaded!");
+                    var prod = new Product()
+                    {
+                        Name = reader["Name"].ToString()
+                    };
+                    products.Add(prod);
+                }//while//
+            }//using//
+            Console.WriteLine("Products Loaded!");
             foreach (var product in products)
+            {
                 Console.WriteLine(product.Name);
+            }//foreach//
         }//Main//
-}//Program//
+    }//Program//
 }//RefactorKata//

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 
 namespace RefactorKata
 {
@@ -7,15 +8,15 @@ namespace RefactorKata
     {
         static void Main(string[] args)
         {
-            const string SQL_COMMAND_TEXT = "select * from Products";
-            const string SERVER_INFO = "Server=.;Database=myDataBase;User Id=myUsername;Password = myPassword;";
+            const string SqlCommandText = "select * from Products";
+            const string ConnectionString = "Server=.;Database=myDataBase;User Id=myUsername;Password = myPassword;";
 
             List<Product> products = new List<Product>();
 
-            using (var conn = new System.Data.SqlClient.SqlConnection(SERVER_INFO))
+            using (var conn = new SqlConnection(ConnectionString))
             {
                 var cmd = conn.CreateCommand();
-                cmd.CommandText = SQL_COMMAND_TEXT;   
+                cmd.CommandText = SqlCommandText;   
                 var reader = cmd.ExecuteReader();
                 while(reader.Read())
                 {
